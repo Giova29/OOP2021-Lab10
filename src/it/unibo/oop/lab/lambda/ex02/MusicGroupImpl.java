@@ -1,5 +1,6 @@
 package it.unibo.oop.lab.lambda.ex02;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -31,27 +32,39 @@ public final class MusicGroupImpl implements MusicGroup {
 
     @Override
     public Stream<String> orderedSongNames() {
-        return null;
+        return songs.stream().map(song -> song.getSongName()).sorted();
     }
 
     @Override
     public Stream<String> albumNames() {
-        return null;
+        return songs.stream().map(s -> s.getAlbumName()).distinct().map(o -> o.orElse("<empty>"));
     }
 
+    //TODO Non va
     @Override
     public Stream<String> albumInYear(final int year) {
-        return null;
+        return songs.stream()
+                .map(s -> s.getAlbumName())
+                .distinct().map(o -> o.get())
+                .filter(s -> albums.get(s).equals(year));
     }
 
     @Override
     public int countSongs(final String albumName) {
-        return -1;
+        return (int) (songs
+                .stream()
+                .map(s -> s.getAlbumName())
+                .filter(s -> s.orElse("").equals(albumName))
+                .count());
     }
 
     @Override
     public int countSongsInNoAlbum() {
-        return -1;
+        return (int) (songs
+                .stream()
+                .map(s -> s.getAlbumName())
+                .filter(s -> s.isEmpty())
+                .count());
     }
 
     @Override
@@ -59,9 +72,12 @@ public final class MusicGroupImpl implements MusicGroup {
         return null;
     }
 
+    //TODO Non va (controllo lunghezza nome e non durata canzone)
     @Override
     public Optional<String> longestSong() {
-        return null;
+        return songs
+                .stream()
+                .map(s -> s.getSongName()).max((o1, o2) -> Integer.max(o1.length(), o2.length()));
     }
 
     @Override
