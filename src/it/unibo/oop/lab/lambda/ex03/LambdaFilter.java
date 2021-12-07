@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import javax.swing.BorderFactory;
@@ -35,7 +36,10 @@ public final class LambdaFilter extends JFrame {
     private static final long serialVersionUID = 1760990730218643730L;
 
     private enum Command {
-        IDENTITY("No modifications", Function.identity());
+        IDENTITY("No modifications", Function.identity()),
+        LOWERCASE("Lowercase", s -> s.toLowerCase()),
+        COUNTCHARS("Count chars", s -> Integer.toString(s.length()));//,
+        //COUNTLINES("Count lines", s -> s.chars().??);
 
         private final String commandName;
         private final Function<String, String> fun;
