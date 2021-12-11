@@ -6,8 +6,10 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
+import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -38,8 +40,10 @@ public final class LambdaFilter extends JFrame {
     private enum Command {
         IDENTITY("No modifications", Function.identity()),
         LOWERCASE("Lowercase", s -> s.toLowerCase()),
-        COUNTCHARS("Count chars", s -> Integer.toString(s.length()));//,
-        //COUNTLINES("Count lines", s -> s.chars().??);
+        COUNTCHARS("Count chars", s -> Integer.toString(s.length())),
+        COUNTLINES("Count lines", s -> Long.toString(1L + s.chars().filter(l -> l == '\n').count())),
+        APLHABETICALORDER("Words in alphabetical order", s -> Arrays.stream(s.split("\\p{Space}")).sorted().collect(Collectors.joining("\n")));
+        //WORDCOUNTER("Word counter", s -> ??);
 
         private final String commandName;
         private final Function<String, String> fun;
@@ -93,5 +97,11 @@ public final class LambdaFilter extends JFrame {
     public static void main(final String... a) {
         final LambdaFilter gui = new LambdaFilter();
         gui.setVisible(true);
+
+        String s = "Ciao a tutti\nCome va?";
+        System.out.println(s);
+        System.out.println("---------");
+        
+        System.out.println();
     }
 }
