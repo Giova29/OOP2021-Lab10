@@ -97,11 +97,5 @@ public final class LambdaFilter extends JFrame {
     public static void main(final String... a) {
         final LambdaFilter gui = new LambdaFilter();
         gui.setVisible(true);
-
-        String s = "Ciao a tutti\nCome va?";
-        System.out.println(s);
-        System.out.println("---------");
-        
-        System.out.println();
     }
 }
